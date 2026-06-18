@@ -1,0 +1,56 @@
+# ===============================
+# Virtual environments
+# ===============================
+.venv/
+venv/
+env/
+
+# Environment variables
+.env
+.env.*
+
+# ===============================
+# PyCharm
+# ===============================
+.idea/
+
+# ===============================
+# Python cache
+# ===============================
+__pycache__/
+*.py[cod]
+
+# ===============================
+# Jupyter
+# ===============================
+.ipynb_checkpoints/
+
+# ===============================
+# Build / dist
+# ===============================
+dist/
+build/
+*.egg-info/
+
+# ===============================
+# OS
+# ===============================
+.DS_Store
+Thumbs.db
+
+
+generator/
+
+dashboard/
+
+data/
+
+*.db
+.bak_del/
+
+storage/
+storage/temp/
+
+storage/backups/
+
+docs/
