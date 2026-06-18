@@ -1,10 +1,24 @@
 # run_olx_import.py
-# ver 1.0
-# created: 2026-06-16 01:20 UTC+3
-# ver 2.0
-# created: 2026-06-16 02:00 UTC+3
+# ver 3.0 created: 2026-06-16 01:20 UTC+3
+# ver 3.0 updated: 2026-06-18 23:15 UTC+3
+#
+# Импорт товаров OLX.
+#
+# Выполняет:
+# - создание товаров
+# - создание цен
+# - загрузку фото в Telegram
+# - получение telegram_file_id
+# - получение telegram_media_group_id
+# - создание ProductPhoto
 
 import asyncio
+
+from aiogram import Bot
+
+from app.config import (
+    BOT_TOKEN,
+)
 
 from app.database.session import (
     SessionLocal,
@@ -38,6 +52,10 @@ from app.imports.services.category_import_service import (
     CategoryImportService,
 )
 
+from app.imports.services.olx_json_import_service import (
+    OlxJsonImportService,
+)
+
 from app.services.product_service import (
     ProductService,
 )
@@ -46,22 +64,22 @@ from app.services.product_price_service import (
     ProductPriceService,
 )
 
-from app.services.product_photo_service import (
-    ProductPhotoService,
-)
-
 from app.services.sku_service import (
     SkuService,
 )
 
-from app.imports.services.olx_json_import_service import (
-    OlxJsonImportService,
+from app.services.telegram_album_service import (
+    TelegramAlbumService,
 )
 
 
 async def main():
 
     async with SessionLocal() as session:
+
+        # =====================================
+        # Repositories
+        # =====================================
 
         product_repository = (
             ProductRepository(
@@ -93,6 +111,10 @@ async def main():
             )
         )
 
+        # =====================================
+        # Import services
+        # =====================================
+
         brand_service = (
             BrandImportService(
                 brand_repository
@@ -104,6 +126,10 @@ async def main():
                 category_repository
             )
         )
+
+        # =====================================
+        # Main services
+        # =====================================
 
         product_service = (
             ProductService(
@@ -119,23 +145,46 @@ async def main():
             )
         )
 
-        product_photo_service = (
-            ProductPhotoService(
-                product_photo_repository
-            )
-        )
-
         sku_service = (
             SkuService(
                 product_repository
             )
         )
 
+        # =====================================
+        # Telegram
+        # =====================================
+
+        bot = Bot(
+            token=BOT_TOKEN
+        )
+
+        telegram_album_service = (
+            TelegramAlbumService(
+                bot=bot
+            )
+        )
+
+        # =====================================
+        # Import service
+        # =====================================
+
         olx_import_service = (
             OlxJsonImportService(
                 product_service=product_service,
-                product_price_service=product_price_service,
-                product_photo_service=product_photo_service,
+
+                product_price_service=(
+                    product_price_service
+                ),
+
+                product_photo_repository=(
+                    product_photo_repository
+                ),
+
+                telegram_album_service=(
+                    telegram_album_service
+                ),
+
                 sku_service=sku_service,
             )
         )
@@ -143,7 +192,7 @@ async def main():
         result = await (
             olx_import_service
             .import_json(
-                "storage/imports/products_detailed_260615-1702.json"
+                "storage/imports/products_detailed_260615-1721.json"
             )
         )
 
@@ -154,114 +203,10 @@ async def main():
         print(result)
         print("=" * 50)
 
+        await bot.session.close()
+
 
 if __name__ == "__main__":
     asyncio.run(
         main()
     )
-
-
-# import asyncio
-#
-# from app.database.session import (
-#     SessionLocal,
-# )
-#
-# from app.database.repositories.product_repository import (
-#     ProductRepository,
-# )
-#
-# from app.database.repositories.product_price_repository import (
-#     ProductPriceRepository,
-# )
-#
-# from app.database.repositories.product_photo_repository import (
-#     ProductPhotoRepository,
-# )
-#
-# from app.services.product_service import (
-#     ProductService,
-# )
-#
-# from app.services.product_price_service import (
-#     ProductPriceService,
-# )
-#
-# from app.services.product_photo_service import (
-#     ProductPhotoService,
-# )
-#
-# from app.services.sku_service import (
-#     SkuService,
-# )
-#
-# from app.imports.services.olx_json_import_service import (
-#     OlxJsonImportService,
-# )
-#
-#
-# async def main():
-#
-#     async with SessionLocal() as session:
-#
-#         product_repository = (
-#             ProductRepository(session)
-#         )
-#
-#         price_repository = (
-#             ProductPriceRepository(session)
-#         )
-#
-#         photo_repository = (
-#             ProductPhotoRepository(session)
-#         )
-#
-#         product_service = (
-#             ProductService(
-#                 product_repository
-#             )
-#         )
-#
-#         product_price_service = (
-#             ProductPriceService(
-#                 price_repository
-#             )
-#         )
-#
-#         product_photo_service = (
-#             ProductPhotoService(
-#                 photo_repository
-#             )
-#         )
-#
-#         sku_service = (
-#             SkuService(
-#                 product_repository
-#             )
-#         )
-#
-#         import_service = (
-#             OlxJsonImportService(
-#                 product_service=product_service,
-#                 product_price_service=product_price_service,
-#                 product_photo_service=product_photo_service,
-#                 sku_service=sku_service,
-#             )
-#         )
-#
-#         result = await (
-#             import_service.import_json(
-#                 "storage/imports/products_detailed_260615-1654.json"
-#             )
-#         )
-#
-#         print()
-#         print("=" * 50)
-#         print("IMPORT RESULT")
-#         print("=" * 50)
-#         print(result)
-#         print("=" * 50)
-#
-#
-# if __name__ == "__main__":
-#     asyncio.run(main())

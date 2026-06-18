@@ -46,7 +46,7 @@ class ProductPhoto(Base):
         nullable=True,
     )
 
-    original_relative_path: Mapped[str | None] = mapped_column(
+    telegram_media_group_id: Mapped[str | None] = mapped_column(
         String(PHOTO_RELATIVE_PATH_MAX_LENGTH),
         nullable=True,
     )
