@@ -1,0 +1,34 @@
+"""
+Общие настройки магазина.
+"""
+
+MIN_ORDER_AMOUNT = 10000      # 100 грн
+
+MAX_CART_ITEMS = 30           # позиций
+
+MAX_FAVORITES = 30            # позиций
+
+MAX_QUANTITY_PER_ITEM = 99   # штук одного товара
+
+MAX_ORDER_COMMENT_LENGTH = 1000
+
+MAX_ADMIN_COMMENT_LENGTH = 1000
+
+SEARCH_RESULTS_LIMIT = 20
+
+SEARCH_PAGE_SIZE = 10
+
+MAX_PRODUCT_PHOTOS = 9 #максимальное кол-во фото для одного товара
+
+MAX_PRODUCT_TITLE_LENGTH = 150
+
+MAX_CATEGORY_NAME_LENGTH = 100
+
+MAX_BRAND_NAME_LENGTH = 100
+
+MAX_SKU_LENGTH = 50
+
+MAX_BARCODE_LENGTH = 50
+
+MAX_SERIAL_NUMBER_LENGTH = 50
+
