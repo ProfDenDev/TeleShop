@@ -57,11 +57,8 @@ class ProductPhotoService:
                 self.photo_repository
                 .create(
                     product_id=product_id,
-
                     original_filename=filename,
-
-                    original_relative_path=filename,
-
+                    telegram_media_group_id=None,
                     position=position,
                 )
             )
