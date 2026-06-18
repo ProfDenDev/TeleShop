@@ -1,0 +1,16 @@
+from enum import StrEnum
+
+
+class OrderNoteType(StrEnum):
+
+    COMMENT = "COMMENT"
+
+    SERIAL_NUMBER = "SERIAL_NUMBER"
+
+    WARRANTY_SEAL = "WARRANTY_SEAL"
+
+    TRACKING_NUMBER = "TRACKING_NUMBER"
+
+    PAYMENT_NOTE = "PAYMENT_NOTE"
+
+    SERVICE_NOTE = "SERVICE_NOTE"

@@ -1,0 +1,11 @@
+"""
+Константы заказов.
+"""
+
+ORDER_PREFIX = "ORD"
+
+FIRST_ORDER_NUMBER = 1001
+
+ORDER_NUMBER_PADDING = 6
+
+ORDER_RESERVE_DAYS = 3
