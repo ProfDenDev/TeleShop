@@ -192,7 +192,7 @@ async def main():
         result = await (
             olx_import_service
             .import_json(
-                "storage/imports/products_detailed_260615-1721.json"
+                "storage/imports/products_detailed_260615-1706.json"
             )
         )
 
