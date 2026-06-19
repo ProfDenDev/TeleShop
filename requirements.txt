@@ -2,7 +2,7 @@ aiogram==3.4.1
 
 SQLAlchemy>=2.0
 aiosqlite
-alembic
+alembic~=1.18.4
 
 redis
 
@@ -11,17 +11,19 @@ uvicorn
 
 jinja2
 
-python-dotenv
+python-dotenv~=1.2.2
 
-openpyxl
+openpyxl~=3.1.5
 
 pydantic
 pydantic-settings
 
-python-slugify
+python-slugify~=8.0.4
 
 orjson
 
 apscheduler
 
 aiofiles
+Markdown~=3.10.2
+weasyprint~=69.0
